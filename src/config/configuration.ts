@@ -28,5 +28,19 @@ export default () => ({
     concurrency: parseInt(process.env.BULK_CONCURRENCY ?? '10', 10),
     maxSize: parseInt(process.env.BULK_MAX_SIZE ?? '100', 10),
   },
+  auth: {
+    secret: process.env.AUTH_SECRET || 'yooooo-change-me',
+    baseURL: process.env.AUTH_BASE_URL || 'http://localhost:3000',
+    basePath: process.env.AUTH_BASE_PATH || '/api/auth',
+    sso: {
+      enabled: process.env.AUTH_SSO_ENABLED === 'true',
+      clientId: process.env.AUTH_SSO_CLIENT_ID,
+      clientSecret: process.env.AUTH_SSO_CLIENT_SECRET,
+      discoveryUrl: process.env.AUTH_SSO_DISCOVERY_URL,
+    },
+    scim: {
+      enabled: process.env.AUTH_SCIM_ENABLED === 'true',
+    },
+  },
   logLevel: process.env.LOG_LEVEL || 'info',
 });

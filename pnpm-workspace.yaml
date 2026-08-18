@@ -1,6 +1,7 @@
 allowBuilds:
   '@scarf/scarf': true
   '@swc/core': true
+  esbuild: true
   lefthook: true
   msgpackr-extract: false
   unrs-resolver: true
