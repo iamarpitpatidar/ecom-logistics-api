@@ -1,0 +1,163 @@
+{
+  "info": {
+    "name": "Multi-Courier Integration Platform",
+    "description": "Unified API for multi-courier shipment management.\n\nBase URL: http://localhost:3000/api/v1\nAuth: Bearer token required on all endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/v1"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courierPartner\": \"shipcrazy\",\n  \"orderNumber\": \"ORD-20260101-001\",\n  \"serviceType\": \"FORWARD\",\n  \"payMode\": \"PREPAID\",\n  \"declaredValue\": 1500,\n  \"collectableValue\": 0,\n  \"weight\": 0.5,\n  \"dimensions\": { \"height\": 10, \"length\": 20, \"breadth\": 15 },\n  \"pieces\": 1,\n  \"itemDescription\": \"Electronics - Wireless Earbuds\",\n  \"itemQuantity\": 1,\n  \"sender\": {\n    \"name\": \"Warehouse Delhi\",\n    \"address\": \"Plot 42, Sector 18, Industrial Area\",\n    \"addressType\": \"Office\",\n    \"city\": \"New Delhi\",\n    \"state\": \"Delhi\",\n    \"country\": \"India\",\n    \"pincode\": \"110001\",\n    \"mobile\": \"9876543210\",\n    \"email\": \"warehouse@example.com\"\n  },\n  \"receiver\": {\n    \"name\": \"Rahul Sharma\",\n    \"address\": \"B-204, Sunshine Apartments, Andheri West\",\n    \"addressType\": \"Home\",\n    \"city\": \"Mumbai\",\n    \"state\": \"Maharashtra\",\n    \"country\": \"India\",\n    \"pincode\": \"400058\",\n    \"mobile\": \"9123456789\",\n    \"email\": \"rahul@example.com\"\n  },\n  \"invoice\": {\n    \"number\": \"INV-2026-0042\",\n    \"date\": \"2026-01-15\",\n    \"value\": 1500\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Order (UrbaneBolt)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courierPartner\": \"urbanebolt\",\n  \"orderNumber\": \"ORD-UB-001\",\n  \"serviceType\": \"FORWARD\",\n  \"payMode\": \"PREPAID\",\n  \"declaredValue\": 2000,\n  \"collectableValue\": 0,\n  \"weight\": 1.2,\n  \"dimensions\": { \"height\": 15, \"length\": 25, \"breadth\": 20 },\n  \"pieces\": 1,\n  \"itemDescription\": \"Clothing - Winter Jacket\",\n  \"itemQuantity\": 1,\n  \"sender\": {\n    \"name\": \"Fashion Hub\",\n    \"address\": \"A-12, Fashion Street\",\n    \"addressType\": \"Office\",\n    \"city\": \"Delhi\",\n    \"state\": \"Delhi\",\n    \"country\": \"India\",\n    \"pincode\": \"110055\",\n    \"mobile\": \"9876000001\",\n    \"email\": \"ops@fashionhub.com\"\n  },\n  \"receiver\": {\n    \"name\": \"Priya Patel\",\n    \"address\": \"Flat 302, Green Valley\",\n    \"addressType\": \"Home\",\n    \"city\": \"Pune\",\n    \"state\": \"Maharashtra\",\n    \"country\": \"India\",\n    \"pincode\": \"411001\",\n    \"mobile\": \"9123000002\",\n    \"email\": \"priya@email.com\"\n  },\n  \"invoice\": {\n    \"number\": \"INV-FH-101\",\n    \"date\": \"2026-01-20\",\n    \"value\": 2000\n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Track Shipment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/orders/track/:awb",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "track", ":awb"],
+              "variable": [
+                { "key": "awb", "value": "AWB123456789" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Order by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/orders/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", ":id"],
+              "variable": [
+                { "key": "id", "value": "550e8400-e29b-41d4-a716-446655440000" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "cancel"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"awbNumber\": \"AWB123456789\"\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bulk Orders",
+      "item": [
+        {
+          "name": "Submit Bulk Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders/bulk",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "bulk"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orders\": [\n    {\n      \"courierPartner\": \"shipcrazy\",\n      \"orderNumber\": \"BULK-001\",\n      \"serviceType\": \"FORWARD\",\n      \"payMode\": \"PREPAID\",\n      \"declaredValue\": 500,\n      \"weight\": 0.3,\n      \"dimensions\": { \"height\": 5, \"length\": 10, \"breadth\": 8 },\n      \"itemDescription\": \"Book\",\n      \"sender\": {\n        \"name\": \"Warehouse\",\n        \"address\": \"123 Main St\",\n        \"city\": \"Delhi\",\n        \"state\": \"Delhi\",\n        \"pincode\": \"110001\",\n        \"mobile\": \"9876543210\"\n      },\n      \"receiver\": {\n        \"name\": \"Customer A\",\n        \"address\": \"456 Park Ave\",\n        \"city\": \"Mumbai\",\n        \"state\": \"Maharashtra\",\n        \"pincode\": \"400001\",\n        \"mobile\": \"9123456001\"\n      }\n    },\n    {\n      \"courierPartner\": \"shipcrazy\",\n      \"orderNumber\": \"BULK-002\",\n      \"serviceType\": \"FORWARD\",\n      \"payMode\": \"COD\",\n      \"declaredValue\": 1200,\n      \"collectableValue\": 1200,\n      \"weight\": 1.5,\n      \"dimensions\": { \"height\": 20, \"length\": 30, \"breadth\": 25 },\n      \"itemDescription\": \"Shoes\",\n      \"sender\": {\n        \"name\": \"Warehouse\",\n        \"address\": \"123 Main St\",\n        \"city\": \"Delhi\",\n        \"state\": \"Delhi\",\n        \"pincode\": \"110001\",\n        \"mobile\": \"9876543210\"\n      },\n      \"receiver\": {\n        \"name\": \"Customer B\",\n        \"address\": \"789 Lake Rd\",\n        \"city\": \"Pune\",\n        \"state\": \"Maharashtra\",\n        \"pincode\": \"411001\",\n        \"mobile\": \"9123456002\"\n      }\n    },\n    {\n      \"courierPartner\": \"urbanebolt\",\n      \"orderNumber\": \"BULK-003\",\n      \"serviceType\": \"FORWARD\",\n      \"payMode\": \"PREPAID\",\n      \"declaredValue\": 3000,\n      \"weight\": 0.8,\n      \"dimensions\": { \"height\": 8, \"length\": 15, \"breadth\": 12 },\n      \"itemDescription\": \"Electronics\",\n      \"sender\": {\n        \"name\": \"Warehouse\",\n        \"address\": \"123 Main St\",\n        \"city\": \"Delhi\",\n        \"state\": \"Delhi\",\n        \"pincode\": \"110001\",\n        \"mobile\": \"9876543210\"\n      },\n      \"receiver\": {\n        \"name\": \"Customer C\",\n        \"address\": \"101 Tech Park\",\n        \"city\": \"Hyderabad\",\n        \"state\": \"Telangana\",\n        \"pincode\": \"500001\",\n        \"mobile\": \"9123456003\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Batch Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/orders/bulk/:batchId",
+              "host": ["{{baseUrl}}"],
+              "path": ["orders", "bulk", ":batchId"],
+              "variable": [
+                { "key": "batchId", "value": "your-batch-id-here" }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

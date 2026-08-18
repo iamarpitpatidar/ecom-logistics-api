@@ -1,98 +1,160 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Multi-Courier Integration Platform
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A production-grade NestJS backend for e-commerce logistics that provides a **unified API** across multiple courier partners. Couriers are pluggable — adding a new partner requires zero changes to controllers, DTOs, or business logic.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Tech Stack
 
-## Description
+| Layer | Technology |
+|-------|-----------|
+| Framework | NestJS 11 |
+| Language | TypeScript 6 |
+| Database | PostgreSQL 16 + Drizzle ORM |
+| Queue | BullMQ + Redis 7 |
+| Auth | better-auth (Bearer sessions) |
+| Build | SWC |
+| Test | Vitest |
+| Lint/Format | oxlint + oxfmt |
+| Package Manager | pnpm 11 |
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Quick Start
 
-## Project setup
+### Prerequisites
 
-```bash
-$ pnpm install
-```
+- Node.js >= 22
+- pnpm >= 11
+- PostgreSQL 16
+- Redis 7
 
-## Compile and run the project
+### Using Docker (recommended)
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+cp .env.example .env
+docker compose up -d
+pnpm install
+pnpm db:push
+pnpm start:dev
 ```
 
-## Run tests
+### Manual Setup
 
 ```bash
-# unit tests
-$ pnpm run test
+# 1. Install dependencies
+pnpm install
 
-# e2e tests
-$ pnpm run test:e2e
+# 2. Configure environment
+cp .env.example .env
+# Edit .env with your DB/Redis credentials
 
-# test coverage
-$ pnpm run test:cov
+# 3. Push database schema
+pnpm db:push
+
+# 4. Run the server
+pnpm start:dev
 ```
 
-## Deployment
+The API will be available at `http://localhost:3000/api/v1` and Swagger docs at `http://localhost:3000/docs`.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Environment Variables
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PORT` | Server port | `3000` |
+| `API_PREFIX` | API route prefix | `api/v1` |
+| `DB_HOST` | PostgreSQL host | `localhost` |
+| `DB_PORT` | PostgreSQL port | `5432` |
+| `DB_USERNAME` | Database user | `postgres` |
+| `DB_PASSWORD` | Database password | `postgres` |
+| `DB_NAME` | Database name | `courier_platform` |
+| `REDIS_HOST` | Redis host | `localhost` |
+| `REDIS_PORT` | Redis port | `6379` |
+| `URBANEBOLT_BASE_URL` | UrbaneBolt API base URL | `https://uat.urbanebolt.in` |
+| `URBANEBOLT_USERNAME` | UrbaneBolt auth username | — |
+| `URBANEBOLT_PASSWORD` | UrbaneBolt auth password | — |
+| `URBANEBOLT_CUSTOMER_CODE` | UrbaneBolt customer code | — |
+| `URBANEBOLT_TIMEOUT` | Request timeout (ms) | `30000` |
+| `URBANEBOLT_RETRY_ATTEMPTS` | Max retry attempts on failure | `3` |
+| `URBANEBOLT_RETRY_DELAY` | Base delay between retries (ms) | `1000` |
+| `BULK_CONCURRENCY` | Concurrent orders per batch chunk | `10` |
+| `BULK_MAX_SIZE` | Max orders per bulk request | `100` |
+| `LOG_LEVEL` | Logging level | `info` |
+
+## API Endpoints
+
+All endpoints are prefixed with `/api/v1` and require Bearer token authentication (except auth routes).
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/orders` | Create a shipment order |
+| GET | `/orders/:id` | Get order details + tracking history |
+| GET | `/orders/track/:awb` | Track shipment by AWB number |
+| POST | `/orders/cancel` | Cancel a shipment |
+| POST | `/orders/bulk` | Submit up to 100 orders (async) |
+| GET | `/orders/bulk/:batchId` | Get batch processing status |
+
+## Running Tests
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+# Run all tests
+pnpm test
+
+# Watch mode
+pnpm test:watch
+
+# Coverage report
+pnpm test:cov
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Scripts
 
-## Resources
+| Script | Description |
+|--------|-------------|
+| `pnpm start:dev` | Start in development mode (watch) |
+| `pnpm start:prod` | Start production build |
+| `pnpm build` | Compile TypeScript via SWC |
+| `pnpm test` | Run vitest suite |
+| `pnpm lint` | Lint with oxlint |
+| `pnpm format` | Format with oxfmt |
+| `pnpm db:generate` | Generate Drizzle migrations |
+| `pnpm db:migrate` | Run pending migrations |
+| `pnpm db:push` | Push schema directly (dev) |
+| `pnpm db:studio` | Open Drizzle Studio GUI |
 
-Check out a few resources that may come in handy when working with NestJS:
+## How to Add a New Courier
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Adding a new courier requires **3 files** and **2 one-line changes**. No modifications to controllers, DTOs, services, or existing adapters.
 
-## Support
+See the full guide: [docs/adding-a-courier.md](docs/adding-a-courier.md)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Documentation
 
-## Stay in touch
+| Document | Description |
+|----------|-------------|
+| [DESIGN.md](DESIGN.md) | Architecture, design patterns, DB schema, trade-offs |
+| [docs/adding-a-courier.md](docs/adding-a-courier.md) | Step-by-step guide for integrating a new courier |
+| [docs/postman-collection.json](docs/postman-collection.json) | Importable Postman collection for all endpoints |
+| `/docs` (Swagger) | Interactive API docs at `http://localhost:3000/docs` |
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Included Courier Adapters
 
-## License
+| Adapter | Purpose |
+|---------|---------|
+| `urbanebolt` | Production integration with UrbaneBolt UAT API |
+| `shipcrazy` | Dummy/mock adapter for local development and testing (always succeeds) |
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## Project Structure
+
+```
+src/
+├── auth/            # better-auth integration, guards, decorators
+├── bulk/            # BullMQ async batch processing
+├── common/          # Shared DTOs, enums, filters, interceptors
+├── config/          # Centralized configuration
+├── courier/         # Pluggable courier architecture
+│   ├── adapters/
+│   │   ├── urbanebolt/   # Real courier integration
+│   │   └── shipcrazy/    # Mock adapter for dev/test
+│   └── interfaces/       # Abstract CourierAdapter contract
+├── database/        # Drizzle ORM setup + schema
+├── orders/          # Order CRUD, tracking, cancellation
+└── main.ts          # Bootstrap + global middleware
+```
