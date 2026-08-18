@@ -1,4 +1,5 @@
 allowBuilds:
   '@scarf/scarf': true
+  lefthook: true
   msgpackr-extract: false
   unrs-resolver: true
