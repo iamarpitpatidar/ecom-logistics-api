@@ -3,13 +3,13 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { of, throwError } from 'rxjs';
 import { AxiosError, AxiosHeaders, type AxiosResponse } from 'axios';
-import { UrbaneBoltAdapter } from '../urbanebolt.adapter.js';
+import { UrbaneBoltAdapter } from '@/courier/adapters/urbanebolt/urbanebolt.adapter';
 import {
   CourierAuthException,
   CourierApiException,
   CourierTimeoutException,
-} from '../../../../common/exceptions/courier.exception.js';
-import type { CreateOrderInternalDto } from '../../../interfaces/courier-adapter.interface.js';
+} from '@/common/exceptions/courier.exception';
+import type { CreateOrderInternalDto } from '@/courier/interfaces/courier-adapter.interface';
 
 function mockAxiosResponse<T>(data: T): AxiosResponse<T> {
   return {

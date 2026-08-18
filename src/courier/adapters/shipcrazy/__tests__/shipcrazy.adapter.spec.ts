@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { ShipCrazyAdapter } from '@/courier';
-import type { CreateOrderInternalDto } from '@/courier';
+import { ShipCrazyAdapter } from '@/courier/adapters/shipcrazy/shipcrazy.adapter';
+import type { CreateOrderInternalDto } from '@/courier/interfaces/courier-adapter.interface';
 
 const TEST_ORDER: CreateOrderInternalDto = {
   orderNumber: 'ORD-001',

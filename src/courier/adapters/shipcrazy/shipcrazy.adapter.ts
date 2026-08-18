@@ -6,7 +6,7 @@ import {
   type CourierTrackingResponse,
   type CourierCancelResponse,
   type CourierServiceabilityResponse,
-} from '@/courier';
+} from '@/courier/interfaces/courier-adapter.interface';
 import { ShipmentStatus } from '@/common/enums/shipment-status.enum';
 
 @Injectable()

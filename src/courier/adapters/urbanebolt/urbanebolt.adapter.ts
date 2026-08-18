@@ -10,12 +10,12 @@ import {
   type CourierTrackingResponse,
   type CourierCancelResponse,
   type CourierServiceabilityResponse,
-} from '../../interfaces/courier-adapter.interface.js';
+} from '@/courier/interfaces/courier-adapter.interface';
 import {
   CourierApiException,
   CourierTimeoutException,
   CourierAuthException,
-} from '../../../common/exceptions/courier.exception.js';
+} from '@/common/exceptions/courier.exception';
 import { UrbaneBoltMapper } from './urbanebolt.mapper.js';
 import type {
   UrbaneBoltManifestResponse,

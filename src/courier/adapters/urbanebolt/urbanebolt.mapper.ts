@@ -2,8 +2,8 @@ import type {
   CreateOrderInternalDto,
   CourierTrackingResponse,
   CourierCancelResponse,
-} from '../../interfaces/courier-adapter.interface.js';
-import { ShipmentStatus } from '../../../common/enums/shipment-status.enum.js';
+} from '@/courier/interfaces/courier-adapter.interface';
+import { ShipmentStatus } from '@/common/enums/shipment-status.enum';
 import type {
   UrbaneBoltManifestItem,
   UrbaneBoltTrackingResponse,

@@ -1,8 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { UrbaneBoltMapper } from '../urbanebolt.mapper.js';
-import { ShipmentStatus } from '../../../../common/enums/shipment-status.enum.js';
-import type { CreateOrderInternalDto } from '../../../interfaces/courier-adapter.interface.js';
-import type { UrbaneBoltTrackingResponse, UrbaneBoltCancelResponse } from '../urbanebolt.types.js';
+import { UrbaneBoltMapper } from '@/courier/adapters/urbanebolt/urbanebolt.mapper';
+import { ShipmentStatus } from '@/common/enums/shipment-status.enum';
+import type { CreateOrderInternalDto } from '@/courier/interfaces/courier-adapter.interface';
+import type {
+  UrbaneBoltTrackingResponse,
+  UrbaneBoltCancelResponse,
+} from '@/courier/adapters/urbanebolt/urbanebolt.types';
 
 const TEST_ORDER: CreateOrderInternalDto = {
   orderNumber: 'ORD-001',
