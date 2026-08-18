@@ -6,9 +6,10 @@ import { AppConfigModule } from './config/config.module.js';
 import { DatabaseModule } from '@/database';
 import { AuthModule, AuthGuard } from '@/auth';
 import { CourierModule } from '@/courier';
+import { OrdersModule } from '@/orders';
 
 @Module({
-  imports: [AppConfigModule, DatabaseModule, AuthModule, CourierModule],
+  imports: [AppConfigModule, DatabaseModule, AuthModule, CourierModule, OrdersModule],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
 })
