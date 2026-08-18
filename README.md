@@ -131,6 +131,7 @@ See the full guide: [docs/adding-a-courier.md](docs/adding-a-courier.md)
 |----------|-------------|
 | [DESIGN.md](DESIGN.md) | Architecture, design patterns, DB schema, trade-offs |
 | [docs/adding-a-courier.md](docs/adding-a-courier.md) | Step-by-step guide for integrating a new courier |
+| [docs/enhancements.md](docs/enhancements.md) | Planned optimizations and improvements |
 | [docs/postman-collection.json](docs/postman-collection.json) | Importable Postman collection for all endpoints |
 | `/docs` (Swagger) | Interactive API docs at `http://localhost:3000/docs` |
 
