@@ -6,7 +6,7 @@ import { genericOAuth } from 'better-auth/plugins/generic-oauth';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import type { ConfigService } from '@nestjs/config';
 
-export function createAuthInstance(db: NodePgDatabase, config: ConfigService) {
+export function createAuthInstance(db: NodePgDatabase<any>, config: ConfigService) {
   const plugins: BetterAuthOptions['plugins'] = [bearer()];
 
   if (config.get<boolean>('auth.sso.enabled')) {
