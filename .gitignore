@@ -36,6 +36,3 @@ docker-compose.override.yml
 
 tsconfig.build.tsbuildinfo
 tsconfig.tsbuildinfo
-
-#Legacy
-src/legacy
