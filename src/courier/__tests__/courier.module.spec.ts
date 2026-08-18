@@ -29,9 +29,9 @@ describe('CourierModule', () => {
     expect(factory).toBeInstanceOf(CourierFactoryService);
   });
 
-  it('should start with empty adapters when none registered', () => {
+  it('should register UrbaneBolt adapter', () => {
     const factory = module.get<CourierFactoryService>(CourierFactoryService);
     factory.onModuleInit();
-    expect(factory.getSupportedCouriers()).toHaveLength(0);
+    expect(factory.getSupportedCouriers()).toContain('urbanebolt');
   });
 });
