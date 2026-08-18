@@ -18,6 +18,24 @@ services:
       - /app/node_modules
     command: pnpm start:dev
 
+  # For horizontal scaling, run dedicated workers independently from API
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: pnpm start:dev
+
   postgres:
     image: postgres:16-alpine
     ports:

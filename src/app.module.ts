@@ -7,9 +7,10 @@ import { DatabaseModule } from '@/database';
 import { AuthModule, AuthGuard } from '@/auth';
 import { CourierModule } from '@/courier';
 import { OrdersModule } from '@/orders';
+import { BulkModule } from '@/bulk';
 
 @Module({
-  imports: [AppConfigModule, DatabaseModule, AuthModule, CourierModule, OrdersModule],
+  imports: [AppConfigModule, DatabaseModule, AuthModule, CourierModule, OrdersModule, BulkModule],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
 })
