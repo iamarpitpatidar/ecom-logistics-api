@@ -14,3 +14,4 @@ export {
   type InvoicePayload,
 } from './interfaces/courier-adapter.interface.js';
 export { UrbaneBoltAdapter, UrbaneBoltMapper } from './adapters/urbanebolt/index.js';
+export { ShipCrazyAdapter } from './adapters/shipcrazy/index.js';

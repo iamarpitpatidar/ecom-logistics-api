@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { CourierFactoryService } from './courier-factory.service.js';
 import { COURIER_ADAPTERS } from './interfaces/courier-adapter.interface.js';
 import { UrbaneBoltAdapter } from './adapters/urbanebolt/index.js';
+import { ShipCrazyAdapter } from './adapters/shipcrazy/index.js';
 
 @Global()
 @Module({
@@ -18,10 +19,14 @@ import { UrbaneBoltAdapter } from './adapters/urbanebolt/index.js';
   ],
   providers: [
     UrbaneBoltAdapter,
+    ShipCrazyAdapter,
     {
       provide: COURIER_ADAPTERS,
-      useFactory: (urbanebolt: UrbaneBoltAdapter) => [urbanebolt],
-      inject: [UrbaneBoltAdapter],
+      useFactory: (urbanebolt: UrbaneBoltAdapter, shipcrazy: ShipCrazyAdapter) => [
+        urbanebolt,
+        shipcrazy,
+      ],
+      inject: [UrbaneBoltAdapter, ShipCrazyAdapter],
     },
     CourierFactoryService,
   ],

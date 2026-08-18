@@ -34,4 +34,10 @@ describe('CourierModule', () => {
     factory.onModuleInit();
     expect(factory.getSupportedCouriers()).toContain('urbanebolt');
   });
+
+  it('should register ShipCrazy adapter', () => {
+    const factory = module.get<CourierFactoryService>(CourierFactoryService);
+    factory.onModuleInit();
+    expect(factory.getSupportedCouriers()).toContain('shipcrazy');
+  });
 });
