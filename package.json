@@ -2,7 +2,11 @@
   "name": "multi-courier-platform",
   "version": "1.0.0",
   "description": "Multi-Courier Integration Platform - Pluggable logistics service with unified API",
-  "author": "Arpit",
+  "author": {
+    "name": "Arpit Patidar",
+    "email": "arpit.ptdr@hotmail.com",
+    "url": "https://arpitpatidar.com"
+  },
   "private": true,
   "license": "MIT",
   "scripts": {
